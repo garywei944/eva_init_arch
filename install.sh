@@ -8,6 +8,7 @@ echo Please make sure that
 echo 1. Connected to the internet
 echo 2. All disk partition and filesystem are created manually and mounted under /mnt
 read -r -p "Press Enter to Continue..."
+echo ---------------------------------------------------------------------------
 
 # Assume using en keyboard layout
 
@@ -26,6 +27,13 @@ if ! mountpoint -q /mnt; then
   exit 1
 fi
 
+# Check if using UEFI
+ls /sys/firmware/efi/efivars &>/dev/null && UEFI=1
+if [[ -n $UEFI ]] && ! mountpoint -q /mnt; then
+  echo /mnt not mounted!
+  exit 1
+fi
+
 # Find fastest mirrors
 echo Optimizing mirrorlist, it may take a few seconds...
 reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
@@ -33,16 +41,16 @@ reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 # Install essential packages
 
 # Check if CPU is intel or amd
-if lscpu | grep -q -i intel; then cpu_make=intel; else cpu_make=amd; fi
+lscpu | grep -q -i intel && cpu_make=intel || cpu_make=amd
 # Check if GPU is nvidia
-if lspci | grep -q -i nvidia; then nvidia=nvidia; fi
+lspci | grep -q -i nvidia && nvidia=nvidia
 pacstrap_apps=(
   # arch linux basic
   base linux linux-firmware base-devel
   # system basic
   ntfs-3g dhcpcd iwd zsh vim man
   # cpu and gpu drivers
-  "$cpu_make"_ucode "$nvidia"
+  "$cpu_make"-ucode "$nvidia"
   # Dual-system
   grub efibootmgr os-prober
   # useful tools
@@ -52,10 +60,13 @@ pacstrap /mnt "${pacstrap_apps[@]}"
 
 # Configure the system
 # fstab
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >/mnt/etc/fstab
 
 # Move script to /tmp
 chmod +x arch_chroot.sh
-mv arch_chroot.sh /mnt/tmp/
+cp arch_chroot.sh /mnt/root/
 
-arch-chroot /mnt /tmp/arch_chroot.sh
+arch-chroot /mnt bash /root/arch_chroot.sh
+rm -f /mnt/root/arch_chroot.sh
+
+umount -R /mnt
