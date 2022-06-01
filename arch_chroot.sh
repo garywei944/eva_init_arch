@@ -1,22 +1,7 @@
 #!/bin/bash
 
-# Check if CPU is intel or amd
-lscpu | grep -q -i intel && cpu_make=intel || cpu_make=amd
-# Check if GPU is nvidia
-lspci | grep -q -i nvidia && nvidia=nvidia
-pacstrap_apps=(
-  # arch linux basic
-  base linux linux-firmware base-devel
-  # system basic
-  ntfs-3g dhcpcd iwd zsh vim man
-  # cpu and gpu drivers
-  "$cpu_make"-ucode "$nvidia"
-  # Dual-system
-  grub efibootmgr os-prober
-  # useful tools
-  git wget
-)
-pacstrap /mnt "${pacstrap_apps[@]}"
+# Exit when error happens
+set -o errexit
 
 # set Time-zone to US Eastern
 ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
@@ -29,6 +14,7 @@ locale-gen
 echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
 # Hostname
+echo ---------------------------------------------------------------------------
 read -r -p "Hostname: " hostname
 echo "$hostname" >/etc/hostname
 
@@ -56,8 +42,12 @@ passwd root
 
 # Add aris user
 echo ---------------------------------------------------------------------------
-echo Setting aris password
-useradd -m -G wheel aris
+read -r -p "Admin username: " username
+echo Setting "$username" password
+useradd -m -G wheel "$username"
 passwd aris
+
+# Enable wheel admin no password
+echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >>/etc/sudoers
 
 echo arch_chroot.sh finished!

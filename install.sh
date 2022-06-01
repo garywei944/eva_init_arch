@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script should be executed within arch linux installation media
+
 # Exit when error happens
 set -o errexit
 
@@ -39,7 +41,24 @@ echo Optimizing mirrorlist, it may take a few seconds...
 reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Install essential packages
-pacstrap /mnt base linux linux-firmware
+
+# Check if CPU is intel or amd
+lscpu | grep -q -i intel && cpu_make=intel || cpu_make=amd
+# Check if GPU is nvidia
+lspci | grep -q -i nvidia && nvidia=nvidia
+apps=(
+  # arch linux basic
+  base linux linux-firmware base-devel
+  # system basic
+  ntfs-3g dhcpcd iwd zsh vim man
+  # cpu and gpu drivers
+  "$cpu_make"-ucode "$nvidia"
+  # Dual-system
+  grub efibootmgr os-prober
+  # useful tools
+  git wget
+)
+pacstrap /mnt "${apps[@]}"
 
 # Configure the system
 # fstab
@@ -51,4 +70,5 @@ cp arch_chroot.sh /mnt/root/
 arch-chroot /mnt bash /root/arch_chroot.sh
 rm -f /mnt/root/arch_chroot.sh
 
-umount -R /mnt
+echo install.sh finished!
+echo ready to reboot and welcome to Arch Linux!
