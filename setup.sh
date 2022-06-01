@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit when error happens
+set -o errexit
+
 # Print premise message
 echo Please make sure that
 echo 1. Connected to the internet
@@ -24,6 +27,7 @@ if ! mountpoint -q /mnt; then
 fi
 
 # Find fastest mirrors
+echo Optimizing mirrorlist, it may take a few seconds...
 reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Install essential packages
@@ -38,7 +42,7 @@ pacstrap_apps=(
   # system basic
   ntfs-3g dhcpcd iwd zsh vim man
   # cpu and gpu drivers
-  "$cpu_make"_code "$nvidia"
+  "$cpu_make"_ucode "$nvidia"
   # Dual-system
   grub efibootmgr os-prober
   # useful tools
