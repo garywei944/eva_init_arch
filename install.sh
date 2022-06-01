@@ -39,31 +39,13 @@ echo Optimizing mirrorlist, it may take a few seconds...
 reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Install essential packages
-
-# Check if CPU is intel or amd
-lscpu | grep -q -i intel && cpu_make=intel || cpu_make=amd
-# Check if GPU is nvidia
-lspci | grep -q -i nvidia && nvidia=nvidia
-pacstrap_apps=(
-  # arch linux basic
-  base linux linux-firmware base-devel
-  # system basic
-  ntfs-3g dhcpcd iwd zsh vim man
-  # cpu and gpu drivers
-  "$cpu_make"-ucode "$nvidia"
-  # Dual-system
-  grub efibootmgr os-prober
-  # useful tools
-  git wget
-)
-pacstrap /mnt "${pacstrap_apps[@]}"
+pacstrap /mnt base linux linux-firmware
 
 # Configure the system
 # fstab
 genfstab -U /mnt >/mnt/etc/fstab
 
 # Move script to /tmp
-chmod +x arch_chroot.sh
 cp arch_chroot.sh /mnt/root/
 
 arch-chroot /mnt bash /root/arch_chroot.sh
