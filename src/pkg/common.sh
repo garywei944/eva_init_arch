@@ -44,7 +44,7 @@ basic() {
     # System management
     shadowsocks-rust
     # Development Runtimes
-    mamabaforge gitflow-avh
+    mambaforge gitflow-avh
     # Development tools
     shc heroku-cli aws-cli-v2
   )
