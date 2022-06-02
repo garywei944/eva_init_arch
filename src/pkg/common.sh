@@ -36,17 +36,17 @@ basic() {
     colordiff dos2unix lazygit pwndbg postgresql
     # Just for fun
     screenfetch neofetch lolcat figlet fortune-mod cowsay
+    # Maybe
+    aws-cli
   )
 
   aur_apps=(
-    # System Essentials
-    rar
     # System management
     shadowsocks-rust
     # Development Runtimes
     mambaforge gitflow-avh
     # Development tools
-    shc heroku-cli aws-cli-v2
+    shc heroku-cli
   )
 
   _pacin "${apps[@]}"

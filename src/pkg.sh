@@ -7,7 +7,7 @@ _pacin() {
 }
 
 _yain() {
-  yay -S --needed --noconfirm "$@"
+  yay -S --needed --noconfirm --useask "$@"
 }
 
 for f in "$SRC_DIR"/pkg/*.sh; do

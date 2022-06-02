@@ -15,6 +15,12 @@ common() {
   (config_vim)
 }
 
+desktop() {
+  (common)
+
+  (_kde)
+}
+
 # Stand Alone Server - no sudo permission
 sa_server() {
   export NOSUDO=
