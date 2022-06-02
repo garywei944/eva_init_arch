@@ -9,7 +9,7 @@ common() {
   (clone_config)
 
   (_docker)
-  (_gtest)
+  (_gtest) || true
 
   (config_terminal)
   (config_vim)
@@ -19,6 +19,7 @@ desktop() {
   (common)
 
   (_kde)
+  (_awesome)
 }
 
 # Stand Alone Server - no sudo permission

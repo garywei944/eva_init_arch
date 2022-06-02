@@ -24,6 +24,5 @@ config_vim() {
   # exit if no sudo permission
   [[ ${NOSUDO+x} ]] && exit
 
-  sudo apt install -y fzf
-  sudo apt install -y ack-grep silversearcher-ag
+  _pacin fzf ack the_silver_searcher
 }

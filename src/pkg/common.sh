@@ -27,7 +27,7 @@ basic() {
     git zsh net-tools openssh wget curl zip unrar ufw gnupg rust
     # System management
     screen tmux bashtop htop fd mlocate ripgrep the_silver_searcher rsync
-    numlockx traceroute jq ranger tree
+    numlockx traceroute jq ranger tree fzf ack
     # Development Runtimes
     base-devel jdk-openjdk python python-pip python-virtualenv python-pipenv
     cmake clang ghostscript cabal-install lua nodejs npm r
