@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 update() {
-  pacman -Syu --noconfirm
+  sudo pacman -Syu --noconfirm
 }
 
 _yay() {
   cd /tmp || exit
-  pacman -S --needed git base-devel
+  sudo pacman -S --needed git base-devel
   git clone https://aur.archlinux.org/yay-bin.git --depth 1
   cd yay-bin || exit
   makepkg -si
@@ -20,7 +20,7 @@ basic() {
 
   update
 
-  (_yay)
+  [[ -n $(command -v yay) ]] || (_yay)
 
   apps=(
     # System Essentials
@@ -32,7 +32,7 @@ basic() {
     base-devel jdk-openjdk python python-pip python-virtualenv python-pipenv
     cmake clang ghostscript cabal-install lua nodejs npm r
     # Development tools
-    emacs vim gitflow-avh gdb valgrind ctags rlwrap aspell autoconf libtool
+    emacs vim gdb valgrind ctags rlwrap aspell autoconf libtool
     colordiff dos2unix lazygit pwndbg postgresql
     # Just for fun
     screenfetch neofetch lolcat figlet fortune-mod cowsay
@@ -44,7 +44,7 @@ basic() {
     # System management
     shadowsocks-rust
     # Development Runtimes
-    mamabaforge
+    mamabaforge gitflow-avh
     # Development tools
     shc heroku-cli aws-cli-v2
   )

@@ -12,7 +12,6 @@ common() {
   (_gtest)
 
   (config_terminal)
-  (config_emacs)
   (config_vim)
 }
 
