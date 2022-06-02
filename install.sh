@@ -3,7 +3,7 @@
 # This script should be executed within arch linux installation media
 
 # Exit when error happens
-set -o errexit
+set -e
 
 # Print premise message
 echo Please make sure that

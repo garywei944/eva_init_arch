@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit when error happens
-set -o errexit
+set -e
 
 # set Time-zone to US Eastern
 ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
