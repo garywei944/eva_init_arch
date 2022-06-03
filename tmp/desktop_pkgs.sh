@@ -14,18 +14,20 @@ yain() {
 
 apps=(
   xorg plasma kde-applications sddm
+  cuda cudnn
   pulseaudio picom nitrogen flameshot
 
   # Libre Office
   libreoffice-fresh
 
   # apps
-  discord netease-cloud-music
+  discord
 )
 
 aur_apps=(
   google-chrome albert visual-studio-code-bin
   zoom simplenote-electron-bin
+  netease-cloud-music
 )
 
 pacin "${apps[@]}"
@@ -47,6 +49,10 @@ cn_fonts=(
   fonts-cjk-sc-yrdzst
 )
 yain "${cn_fonts[@]}"
+
+# Sogou Input
+pacin fcitx kcm-fcitx fcitx-configtool
+yain fcitx-sogoupinyin
 
 # VS Code
 yain visual-studio-code-bin

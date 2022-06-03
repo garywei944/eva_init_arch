@@ -44,21 +44,21 @@ reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Check if CPU is intel or amd
 lscpu | grep -q -i intel && cpu_make=intel || cpu_make=amd
-# Check if GPU is nvidia
-lspci | grep -q -i nvidia && nvidia=nvidia
 apps=(
   # arch linux basic
   base linux linux-firmware base-devel
   # system basic
   ntfs-3g dhcpcd iwd zsh vim man
   # cpu and gpu drivers
-  "$cpu_make"-ucode "$nvidia"
+  "$cpu_make"-ucode
   # Dual-system
   grub efibootmgr os-prober
   # useful tools
   git wget
 )
 pacstrap /mnt "${apps[@]}"
+# Check if GPU is nvidia
+lspci | grep -q -i nvidia && pacstrap /mnt nvidia cuda cudnn
 
 # Configure the system
 # fstab
