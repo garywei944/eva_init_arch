@@ -14,7 +14,6 @@ yain() {
 
 apps=(
   xorg plasma kde-applications sddm
-  cuda cudnn
   pulseaudio picom nitrogen flameshot
 
   # Libre Office
