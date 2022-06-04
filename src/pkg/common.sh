@@ -9,7 +9,7 @@ _yay() {
   sudo pacman -S --needed git base-devel
   git clone https://aur.archlinux.org/yay-bin.git --depth 1
   cd yay-bin || exit
-  makepkg -si
+  makepkg -si --needed --noconfirm
 
   rm -fr /tmp/yay-bin
 }
