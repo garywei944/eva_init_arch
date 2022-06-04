@@ -27,7 +27,7 @@ systemctl enable dhcpcd
 # boot
 
 # https://www.reddit.com/r/archlinux/comments/v0x3c4/psa_if_you_run_kernel_518_with_nvidia_pass_ibtoff/
-sed '/GRUB_CMDLINE_LINUX=/s/"$/ibt=off"$/' -i /etc/default/grub
+sed '/GRUB_CMDLINE_LINUX=/s/"$/ibt=off"/' -i /etc/default/grub
 
 echo "GRUB_DISABLE_OS_PROBER=false" >>/etc/default/grub
 os-prober
