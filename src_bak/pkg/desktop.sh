@@ -4,6 +4,7 @@ _kde() {
   _pacin xorg plasma kde-applications sddm
 
   sudo systemctl enable sddm
+  sudo systemctl enable NetworkManager
 }
 
 _awesome() {

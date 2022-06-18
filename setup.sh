@@ -18,8 +18,8 @@ cd "$EVA_ROOT" || exit
 config_keys() { ./keys/init_keys.sh; }
 
 # Load functions
-. ./src/init_config.sh
-. ./src/pkg.sh
+. ./src_bak/init_config.sh
+. ./src_bak/pkg.sh
 . ./instance.sh
 
 # Run arguments
