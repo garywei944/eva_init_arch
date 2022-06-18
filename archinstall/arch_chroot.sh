@@ -48,6 +48,9 @@ useradd -m -G wheel "$username"
 passwd aris
 
 # Enable wheel admin no password
-echo "%wheel ALL=(ALL:ALL) NOPASSWD: ALL" >>/etc/sudoers
+cat <<"EOF" | sudo tee -a /etc/sudoers
+Defaults	editor=/usr/bin/vim
+%wheel	ALL=(ALL:ALL)	NOPASSWD: ALL
+EOF
 
 echo arch_chroot.sh finished!

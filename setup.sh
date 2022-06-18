@@ -18,9 +18,7 @@ cd "$EVA_ROOT" || exit
 config_keys() { ./keys/init_keys.sh; }
 
 # Load functions
-. ./src_bak/init_config.sh
-. ./src_bak/pkg.sh
-. ./instance.sh
+find "$SRC_DIR" -type f -name '*.sh' -exec . {} \;
 
 # Run arguments
 for cmd in "$@"; do

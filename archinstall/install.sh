@@ -36,9 +36,9 @@ if [[ -n $UEFI ]] && ! mountpoint -q /mnt; then
   exit 1
 fi
 
-# Find fastest mirrors
-echo Optimizing mirrorlist, it may take a few seconds...
-reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+## Find fastest mirrors
+#echo Optimizing mirrorlist, it may take a few seconds...
+#reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Install essential packages
 
@@ -57,7 +57,8 @@ apps=(
   git wget
 )
 pacstrap /mnt "${apps[@]}"
-# Check if GPU is nvidia
+
+# install nvidia if needed
 lspci | grep -q -i nvidia && pacstrap /mnt nvidia cuda cudnn
 
 # Configure the system

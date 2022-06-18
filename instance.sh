@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 common() {
+  (_yay)
+  (arch_cn)
+
   (basic)
-  (config_sudo)
 
   (config_keys)
   (config_git)
-  (clone_config)
+  (dotfiles)
+  (config_shell)
+  (config_vim)
 
   (_docker)
-  (_gtest) || true
-
-  (config_terminal)
-  (config_vim)
 }
 
 desktop() {
@@ -31,16 +31,9 @@ sa_server() {
   (clone_config)
 
   (sa_common)
-  (_mambaforge)
-  (_awscli)
 
-  (config_terminal)
+  (config_shell)
   (config_emacs)
   (config_vim)
-  (config_server)
-}
-
-vagrant() {
-  (common)
   (config_server)
 }
