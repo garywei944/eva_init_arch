@@ -18,6 +18,13 @@ echo ---------------------------------------------------------------------------
 read -r -p "Hostname: " hostname
 echo "$hostname" >/etc/hostname
 
+# hosts file
+cat <<"EOF" >>/etc/hosts
+#<ip-address>	<hostname.domain.org>	<hostname>
+127.0.0.1	localhost.localdomain	localhost
+::1		localhost.localdomain	localhost
+EOF
+
 # initramfs
 mkinitcpio -P
 

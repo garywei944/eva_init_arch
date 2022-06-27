@@ -11,6 +11,9 @@ _yay() {
   makepkg -si --needed --noconfirm
 
   rm -fr /tmp/yay-bin
+
+  # Use multiple cores for make package
+  echo 'MAKEFLAGS="-j$(nproc)"' | sudo tee -a /etc/makepkg.conf
 }
 
 arch_cn() {
