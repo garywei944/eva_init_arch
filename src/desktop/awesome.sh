@@ -3,6 +3,6 @@
 _awesome() {
   _pacin awesome
 
-  cd "$HOME"/.config/awesome/ || exit
+  cd ~/.config/awesome/ || exit
   make install
 }

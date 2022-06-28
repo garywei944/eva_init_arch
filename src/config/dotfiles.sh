@@ -12,4 +12,7 @@ dotfiles() {
   git reset --hard origin/main
   git branch -m master main
   git branch --set-upstream-to=origin/main main
+
+  # Manually create .xsession file
+  echo '. ~/.envrc' >>~/.xsession
 }

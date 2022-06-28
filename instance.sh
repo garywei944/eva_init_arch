@@ -20,6 +20,13 @@ desktop() {
 
   (_kde)
   (_awesome)
+
+  (touchpad)
+
+  (locale_cn)
+  (locale_jp)
+  (sougou_input)
+  (mozc_input)
 }
 
 # Stand Alone Server - no sudo permission

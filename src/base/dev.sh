@@ -50,6 +50,6 @@ basic() {
 
   # pwngdb
   if ! grep pwndbg ~/.gdbinit &>/dev/null; then
-    echo "source /usr/share/pwndbg/gdbinit.py" >>"$HOME"/.gdbinit
+    echo "source /usr/share/pwndbg/gdbinit.py" >>~/.gdbinit
   fi
 }

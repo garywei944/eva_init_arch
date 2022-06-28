@@ -1,11 +1,24 @@
 #!/usr/bin/env bash
 
-sudo pacman -S libinput
-sudo pacman -S xf86-input-synaptics
+touchpad() {
+  # TODO: maybe automatic check if touchpad device available
 
-sudo cp /usr/share/X11/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d
+  read -r -p "Install touchpad driver? (disabled by default) [y/N] " response
+  case "$response" in
+  [yY][eE][sS] | [yY])
+    echo Installing touchpad driver and disable it
+    ;;
 
-cat << "EOF" | sudo tee -a /etc/X11/xorg.conf.d/70-synaptics.conf
+  *)
+    exit
+    ;;
+  esac
+
+  _pacin libinput xf86-input-synaptics
+
+  sudo cp /usr/share/X11/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d
+
+  cat <<"EOF" | sudo tee -a /etc/X11/xorg.conf.d/70-synaptics.conf
 # Tap to Click
 Section "InputClass"
 	Identifier "touchpad"
@@ -30,3 +43,4 @@ Section "InputClass"
   # Option "TouchpadOff" "1"
 EndSection
 EOF
+}
