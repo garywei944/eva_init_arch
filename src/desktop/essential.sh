@@ -11,7 +11,7 @@ desktop_essential() {
     # Office
     libreoffice-fresh
     # apps
-    discord xdg-utils libpulse
+    discord xdg-utils libpulse sublime-merge
     # zoom
     pulseaudio-alsa qt5-webengine xcompmgr
   )

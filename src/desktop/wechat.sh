@@ -7,9 +7,9 @@ _wechat() {
 Include = /etc/pacman.d/mirrorlist
 EOF
 
-  pacman -Sy
+  sudo pacman -Sy
 
   _pacin lib32-nvidia-utils wine
-  _yain noto-fonts-sc
+  #  _yain noto-fonts-sc
   _yain deepin-wine-wechat
 }

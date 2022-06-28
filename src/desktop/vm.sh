@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 _virtualbox() {
-  _pacin virtualbox virtualbox-host-modules-arch
+  _pacin virtualbox
 }
 
 _vagrant() {

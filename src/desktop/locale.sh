@@ -56,7 +56,8 @@ locale_jp() {
 sougou_input() {
   (update)
 
-  _pacin fcitx fcitx-configtool fcitx-sogoupinyin
+  _pacin fcitx fcitx-configtool
+  _yain fcitx-sogoupinyin
 
   cat <<"EOF" >>~/.xsession
 export GTK_IM_MODULE=fcitx
