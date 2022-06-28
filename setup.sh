@@ -18,7 +18,9 @@ cd "$EVA_ROOT" || exit
 config_keys() { ./keys/init_keys.sh; }
 
 # Load functions
-find "$SRC_DIR" -type f -name '*.sh' -exec . {} \;
+find "$SRC_DIR" -type f -name '*.sh' | while read -r f; do
+  . "$f"
+done
 
 # Run arguments
 for cmd in "$@"; do

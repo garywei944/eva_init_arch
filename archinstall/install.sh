@@ -97,6 +97,7 @@ cp /tmp/profile /mnt/root
 
 arch-chroot /mnt bash /root/arch_chroot.sh
 rm -f /mnt/root/arch_chroot.sh
+rm -f /mnt/root/profile
 
 echo install.sh finished!
 echo ready to reboot and welcome to Arch Linux!
