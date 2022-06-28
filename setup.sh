@@ -22,6 +22,8 @@ find "$SRC_DIR" -type f -name '*.sh' | while read -r f; do
   . "$f"
 done
 
+. "$EVA_ROOT"/instance.sh
+
 # Run arguments
 for cmd in "$@"; do
   ($cmd)
