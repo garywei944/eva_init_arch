@@ -3,8 +3,38 @@
 # Exit when error happens
 set -e
 
-# set Time-zone to US Eastern
-ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
+# Source env variables
+. /root/profile || true
+
+# Use CN source if needed
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+
+case "$COUNTRY" in
+CN)
+  echo Setting CN sources and Shanghai time zone.
+  curl -s "https://archlinux.org/mirrorlist/?country=CN&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on" |
+    sed -e 's/^#Server/Server/' -e '/^#/d' |
+    rankmirrors -n 5 - |
+    tee /etc/pacman.d/mirrorlist
+  ;;
+*)
+  echo Setting US sources and US Eastern Time.
+  curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on" |
+    sed -e 's/^#Server/Server/' -e '/^#/d' |
+    rankmirrors -n 5 - |
+    tee /etc/pacman.d/mirrorlist
+  ;;
+esac
+
+# set Time-zone
+case "$COUNTRY" in
+CN)
+  ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+  ;;
+*)
+  ln -sf /usr/share/zoneinfo/US/Eastern /etc/localtime
+  ;;
+esac
 hwclock --systohc
 
 # Localization

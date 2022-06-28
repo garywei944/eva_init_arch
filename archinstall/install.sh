@@ -5,6 +5,9 @@
 # Exit when error happens
 set -e
 
+# Clean up temp file
+rm /tmp/profile || true
+
 # Print premise message
 echo Please make sure that
 echo 1. Connected to the internet
@@ -36,9 +39,32 @@ if [[ -n $UEFI ]] && ! mountpoint -q /mnt; then
   exit 1
 fi
 
-## Find fastest mirrors
-#echo Optimizing mirrorlist, it may take a few seconds...
-#reflector --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
+# Ask if in China and set up pacman sources
+
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+
+# https://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
+read -r -p "Are you currently in China? [y/N] " response
+case "$response" in
+[yY][eE][sS] | [yY])
+  echo Setting CN sources and Shanghai time zone.
+  COUNTRY=CN
+  curl -s "https://archlinux.org/mirrorlist/?country=CN&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on" |
+    sed -e 's/^#Server/Server/' -e '/^#/d' |
+    rankmirrors -n 5 - |
+    tee /etc/pacman.d/mirrorlist
+  ;;
+*)
+  echo Setting US sources and US Eastern Time.
+  COUNTRY=US
+  curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=http&protocol=https&ip_version=4&ip_version=6&use_mirror_status=on" |
+    sed -e 's/^#Server/Server/' -e '/^#/d' |
+    rankmirrors -n 5 - |
+    tee /etc/pacman.d/mirrorlist
+  ;;
+esac
+
+echo "COUNTRY=$COUNTRY" >>/tmp/profile
 
 # Install essential packages
 
@@ -54,7 +80,7 @@ apps=(
   # Dual-system
   grub efibootmgr os-prober
   # useful tools
-  git wget
+  git wget pacman-contrib
 )
 pacstrap /mnt "${apps[@]}"
 
@@ -65,8 +91,9 @@ lspci | grep -q -i nvidia && pacstrap /mnt nvidia cuda cudnn
 # fstab
 genfstab -U /mnt >/mnt/etc/fstab
 
-# Move script to /tmp
+# Move script to /root
 cp arch_chroot.sh /mnt/root/
+cp /tmp/profile /mnt/root
 
 arch-chroot /mnt bash /root/arch_chroot.sh
 rm -f /mnt/root/arch_chroot.sh
