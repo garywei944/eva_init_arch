@@ -22,11 +22,19 @@ desktop() {
   (_awesome)
 
   (touchpad)
+  (sound)
 
   (locale_cn)
   (locale_jp)
   (sougou_input)
   (mozc_input)
+
+  (_wechat)
+  (desktop_essential)
+
+  (_virtualbox)
+  (_vagrant)
+  (_vmware)
 }
 
 # Stand Alone Server - no sudo permission
