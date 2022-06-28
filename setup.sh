@@ -18,8 +18,12 @@ cd "$EVA_ROOT" || exit
 config_keys() { ./keys/init_keys.sh; }
 
 # Load functions
-find "$SRC_DIR" -type f -name '*.sh' | while read -r f; do
-  . "$f"
+
+# https://stackoverflow.com/a/54561526
+mapfile -d '' files < <(find "$SRC_DIR" -type f -name '*.sh' -print0)
+
+for file in "${files[@]}"; do
+  . "$file"
 done
 
 . "$EVA_ROOT"/instance.sh
