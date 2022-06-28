@@ -23,6 +23,6 @@ arch_cn() {
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 EOF
 
-  _pacin archlinuxcn-keyring
   sudo pacman -Sy
+  _pacin archlinuxcn-keyring
 }

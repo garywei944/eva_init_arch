@@ -18,13 +18,12 @@ cd "$EVA_ROOT" || exit
 config_keys() { ./keys/init_keys.sh; }
 
 # Load functions
-
+# Issue with other approaches to use find and source them
 # https://stackoverflow.com/a/54561526
-mapfile -d '' files < <(find "$SRC_DIR" -type f -name '*.sh' -print0)
-
-for file in "${files[@]}"; do
-  . "$file"
-done
+mapfile -d '' files < <(find "$SRC_DIR" -type f -name '*.sh' -print0) &&
+  for file in "${files[@]}"; do
+    . "$file"
+  done
 
 . "$EVA_ROOT"/instance.sh
 
