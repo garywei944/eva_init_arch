@@ -8,6 +8,17 @@ EVA_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)
 export EVA_ROOT
 export SRC_DIR="$EVA_ROOT"/src
 
+# https://stackoverflow.com/questions/3231804/in-bash-how-to-add-are-you-sure-y-n-to-any-command-or-alias
+read -r -p "Are you currently in China? [y/N] " response
+case "$response" in
+[yY][eE][sS] | [yY])
+  export COUNTRY=CN
+  ;;
+*)
+  export COUNTRY=US
+  ;;
+esac
+
 # CD into the directory of init.sh
 cd "$EVA_ROOT" || exit
 
